@@ -961,6 +961,9 @@ import Footer from '../components/Footer';
 import { Search, Filter, Star, MapPin, Phone, Clock, Users } from 'lucide-react';
 import axios from 'axios';
 
+// Add this import at the top
+import { useNavigate } from 'react-router-dom';
+
 const Services = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -968,6 +971,7 @@ const Services = () => {
   const [priceRange, setPriceRange] = useState('');
   const [services, setServices] = useState([]);
   const [requestStatuses, setRequestStatuses] = useState({});
+  const navigate = useNavigate();
 
   // const userId = "USER_ID_HERE"; // Replace with actual logged-in user ID
  const userId = "USER_ID_HERE"; 
@@ -1059,11 +1063,20 @@ const Services = () => {
   }, []);
 
   const handleBookNow = async (service) => {
-    //check
-    console.log("Booking Attempt:", {
-    serviceType: service.category,
-    providerId: service.providerName,
-    userId: userId,
+    navigate('/booking-form', {
+    state: {
+      serviceData: {
+        category: service.category,
+        providerName: service.providerName,
+        serviceName: service.name,
+        price: service.price,
+        rating: service.rating,
+        location: service.location,
+        experience: service.experience,
+        availability: service.availability
+      },
+      userId: userId
+    }
   });
     try {
       const response = await axios.post('http://localhost:5000/api/requests/book', {
