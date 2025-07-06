@@ -31,7 +31,7 @@ const App = () => (
           <Route path="/book-service" element={<BookingForm />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/booking" element={<BookingForm />} />
+          <Route path="/booking-form" element={<BookingForm />} />
 
           {/* <Route path="/providerdashboard" element={<ProviderDashboard providerId={"PROVIDER_ID_HERE"} />} />
            */}
