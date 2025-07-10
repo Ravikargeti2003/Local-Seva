@@ -1062,7 +1062,7 @@ const Services = () => {
     fetchRequestStatus();
   }, []);
 
-  const handleBookNow = async (service) => {
+  const handleBookNow = (service) => {
     navigate('/booking-form', {
     state: {
       serviceData: {
@@ -1078,19 +1078,22 @@ const Services = () => {
       userId: userId
     }
   });
-    try {
-      const response = await axios.post('http://localhost:5000/api/requests/book', {
+};
+
+//comnented as clik on booknow was also sending req
+  //   try {
+  //     const response = await axios.post('http://localhost:5000/api/requests/book', {
         
-        serviceType: service.category,
-        providerId: service.providerName, // important: use providerName as ID
-        userId: userId
-      });
-      alert("Service request sent successfully.");
-    } catch (err) {
-      console.error("Booking error:", err);
-      alert("Failed to send service request.");
-    }
-  };
+  //       serviceType: service.category,
+  //       providerId: service.providerName, // important: use providerName as ID
+  //       userId: userId
+  //     });
+  //     alert("Service request sent successfully.");
+  //   } catch (err) {
+  //     console.error("Booking error:", err);
+  //     alert("Failed to send service request.");
+  //   }
+  // };
 
   const filteredServices = services.filter(service => {
     const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
