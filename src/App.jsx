@@ -13,6 +13,8 @@ import BookingForm from "./pages/BookingForm";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
 import ProviderDashboard from "./pages/ProviderDashboard";
+import ProtectedProviderRoute from './components/ProtectedProviderRoute'; // <-- ADD THIS on top
+
 
 const queryClient = new QueryClient();
 
@@ -35,7 +37,16 @@ const App = () => (
 
           {/* <Route path="/providerdashboard" element={<ProviderDashboard providerId={"PROVIDER_ID_HERE"} />} />
            */}
-           <Route path="/providerdashboard" element={<ProviderDashboard />} />
+           {/* <Route path="/providerdashboard" element={<ProviderDashboard />} />
+            */}
+            <Route
+              path="/providerdashboard"
+              element={
+                <ProtectedProviderRoute>
+                  <ProviderDashboard />
+                </ProtectedProviderRoute>
+              }
+            />
 
 
 

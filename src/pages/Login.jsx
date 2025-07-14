@@ -176,12 +176,17 @@ import Footer from '../components/Footer';
 import { User } from 'lucide-react';
 import axios from 'axios';
 
+import  {useNavigate}  from 'react-router-dom';
+
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     userType: 'customer'
   });
+  const navigate = useNavigate(); // ⬅️ Add this hook
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -213,9 +218,14 @@ const Login = () => {
       localStorage.setItem('userName', name);
 
       if (formData.userType === 'provider') {
-        window.location.href = '/providerdashboard';
+        // window.location.href = '/providerdashboard';
+        //on place of window location one used navigate
+         localStorage.setItem('isProvider', 'true');
+      navigate('/providerdashboard');
       } else {
-        window.location.href = '/'; // your main user interface
+        // window.location.href = '/'; // your main user interface
+        localStorage.setItem('isProvider', 'false');
+      navigate('/'); // or /dashboard if you have it
       }
     } catch (err) {
       alert(err.response?.data?.error || 'Login failed.');

@@ -683,7 +683,9 @@ const BookingForm = () => {
   const mockProviders = [
     { id: 1, name: 'Rajesh Kumar', rating: 4.8, price: '₹300-500/hour', availability: 'Available Today' },
     { id: 2, name: 'Amit Sharma', rating: 4.6, price: '₹250-400/hour', availability: 'Available Tomorrow' },
-    { id: 3, name: 'Priya Singh', rating: 4.9, price: '₹500-800/hour', availability: 'Available Now' }
+    { id: 3, name: 'Priya Singh', rating: 4.9, price: '₹500-800/hour', availability: 'Available Now' },
+    { id: 4, name: 'Suresh Patel', rating: 4.9, price: '₹500-800/hour', availability: 'Available Now' }
+
   ];
 
   const handleInputChange = (e) => {
