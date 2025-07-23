@@ -196,41 +196,76 @@ const Login = () => {
     }));
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const url =
+  //     formData.userType === 'provider'
+  //       ? 'http://localhost:5000/api/provider/login'
+  //       : 'http://localhost:5000/api/user/login';
+
+  //   try {
+  //     const res = await axios.post(url, {
+  //       email: formData.email,
+  //       password: formData.password
+  //     });
+
+  //     const token = res.data.token;
+  //     const name = formData.userType === 'provider'
+  //       ? res.data.provider?.name
+  //       : res.data.user?.name;
+
+  //     localStorage.setItem('token', token);
+  //     localStorage.setItem('userName', name);
+
+  //     if (formData.userType === 'provider') {
+  //       // window.location.href = '/providerdashboard';
+  //       //on place of window location one used navigate
+  //        localStorage.setItem('isProvider', 'true');
+  //     navigate('/providerdashboard');
+  //     } else {
+  //       // window.location.href = '/'; // your main user interface
+  //       localStorage.setItem('isProvider', 'false');
+  //     navigate('/'); // or /dashboard if you have it
+  //     }
+  //   } catch (err) {
+  //     alert(err.response?.data?.error || 'Login failed.');
+  //   }
+  // };
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const url =
-      formData.userType === 'provider'
-        ? 'http://localhost:5000/api/provider/login'
-        : 'http://localhost:5000/api/user/login';
+  e.preventDefault();
 
-    try {
-      const res = await axios.post(url, {
-        email: formData.email,
-        password: formData.password
-      });
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const url =
+    formData.userType === 'provider'
+      ? `${baseUrl}/provider/login`
+      : `${baseUrl}/user/login`;
 
-      const token = res.data.token;
-      const name = formData.userType === 'provider'
-        ? res.data.provider?.name
-        : res.data.user?.name;
+  try {
+    const res = await axios.post(url, {
+      email: formData.email,
+      password: formData.password
+    });
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('userName', name);
+    const token = res.data.token;
+    const name = formData.userType === 'provider'
+      ? res.data.provider?.name
+      : res.data.user?.name;
 
-      if (formData.userType === 'provider') {
-        // window.location.href = '/providerdashboard';
-        //on place of window location one used navigate
-         localStorage.setItem('isProvider', 'true');
+    localStorage.setItem('token', token);
+    localStorage.setItem('userName', name);
+
+    if (formData.userType === 'provider') {
+      localStorage.setItem('isProvider', 'true');
       navigate('/providerdashboard');
-      } else {
-        // window.location.href = '/'; // your main user interface
-        localStorage.setItem('isProvider', 'false');
-      navigate('/'); // or /dashboard if you have it
-      }
-    } catch (err) {
-      alert(err.response?.data?.error || 'Login failed.');
+    } else {
+      localStorage.setItem('isProvider', 'false');
+      navigate('/');
     }
-  };
+  } catch (err) {
+    alert(err.response?.data?.error || 'Login failed.');
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -417,40 +417,76 @@ const Register = () => {
     setFormData(prev => ({ ...prev, [name]: files[0] }));
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const url = userType === 'provider'
+  //     ? 'http://localhost:5000/api/provider/register'
+  //     : 'http://localhost:5000/api/user/register';
+
+  //   try {
+  //     if (userType === 'provider') {
+  //       const form = new FormData();
+  //       for (const key in formData) {
+  //         if (formData[key]) {
+  //           form.append(key, formData[key]);
+  //         }
+  //       }
+  //       await axios.post(url, form);
+  //     } else {
+  //       const userPayload = {
+  //         name: formData.name,
+  //         email: formData.email,
+  //         password: formData.password,
+  //         phone: formData.phone,
+  //         address: formData.address
+  //       };
+  //       await axios.post(url, userPayload, {
+  //         headers: { 'Content-Type': 'application/json' }
+  //       });
+  //     }
+
+  //     alert('Registration successful! Now sign in.');
+  //     window.location.href = '/login';
+  //   } catch (err) {
+  //     alert(err.response?.data?.error || 'Registration failed.');
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const url = userType === 'provider'
-      ? 'http://localhost:5000/api/provider/register'
-      : 'http://localhost:5000/api/user/register';
+  e.preventDefault();
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const url = userType === 'provider'
+    ? `${baseUrl}/provider/register`
+    : `${baseUrl}/user/register`;
 
-    try {
-      if (userType === 'provider') {
-        const form = new FormData();
-        for (const key in formData) {
-          if (formData[key]) {
-            form.append(key, formData[key]);
-          }
+  try {
+    if (userType === 'provider') {
+      const form = new FormData();
+      for (const key in formData) {
+        if (formData[key]) {
+          form.append(key, formData[key]);
         }
-        await axios.post(url, form);
-      } else {
-        const userPayload = {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          phone: formData.phone,
-          address: formData.address
-        };
-        await axios.post(url, userPayload, {
-          headers: { 'Content-Type': 'application/json' }
-        });
       }
-
-      alert('Registration successful! Now sign in.');
-      window.location.href = '/login';
-    } catch (err) {
-      alert(err.response?.data?.error || 'Registration failed.');
+      await axios.post(url, form);
+    } else {
+      const userPayload = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+        address: formData.address
+      };
+      await axios.post(url, userPayload, {
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
-  };
+
+    alert('Registration successful! Now sign in.');
+    window.location.href = '/login';
+  } catch (err) {
+    alert(err.response?.data?.error || 'Registration failed.');
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50">
