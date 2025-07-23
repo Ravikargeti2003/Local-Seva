@@ -15,8 +15,8 @@ const app = express();
 
 //check
 app.use(cors({
-  origin: 'https://local-seva.netlify.app/',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: 'https://local-seva.netlify.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
   credentials: true
 }));
 
