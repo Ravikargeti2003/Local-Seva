@@ -12,7 +12,14 @@ const providerAuthRoutes = require('./routes/providerAuth');
 const userAuthRoutes = require('./routes/userAuth');
 
 const app = express();
-app.use(cors());
+
+//check
+app.use(cors({
+  origin: 'https://local-seva.netlify.app/',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use('/api/provider', providerAuthRoutes);
 require('dotenv').config();
