@@ -33,6 +33,11 @@ app.use('/api/provider', providerAuthRoutes);
 //routes for userauth
 app.use('/api/user', userAuthRoutes);
 
+// Optional: Add a root endpoint to confirm server is live
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
+});
+
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected"))
