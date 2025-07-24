@@ -454,7 +454,9 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  // const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL.replace(/\/$/, ''); // remove trailing slash if present
+
   const url = userType === 'provider'
     ? `${baseUrl}/provider/register`
     : `${baseUrl}/user/register`;
