@@ -13,7 +13,27 @@ const userAuthRoutes = require('./routes/userAuth');
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+const allowedOrigins = [
+ 'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://localhost:8080',      // Also allow localhost via IP
+  'https://localsevaaa.netlify.app/'  // Your Netlify frontend
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed for this origin: ' + origin));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+}));
+
 
 //check
 // app.use(cors({
