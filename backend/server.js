@@ -18,7 +18,7 @@ const allowedOrigins = [
  'http://localhost:3000',
   'http://127.0.0.1:3000',
   'http://localhost:8080',      // Also allow localhost via IP
-  'https://localsevaaa.netlify.app/'  // Your Netlify frontend
+  'https://local-sevaaa.netlify.app/'  // Your Netlify frontend
 ];
 
 app.use(cors({
