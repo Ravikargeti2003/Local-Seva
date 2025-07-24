@@ -2,6 +2,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config(); // move to top to ensure env variables load
+
 
 //auth
 const providerAuthRoutes = require('./routes/providerAuth');
@@ -15,14 +17,17 @@ const app = express();
 
 //check
 app.use(cors({
-  origin: 'https://local-seva.netlify.app',
+  origin: 'https://local-sevak.netlify.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE','OPTIONS'],
   credentials: true
 }));
 
+// ✅ Handle preflight OPTIONS request globally
+app.options('*', cors());
+
 app.use(express.json());
 app.use('/api/provider', providerAuthRoutes);
-require('dotenv').config();
+// require('dotenv').config();
 
 
 //routes for userauth
