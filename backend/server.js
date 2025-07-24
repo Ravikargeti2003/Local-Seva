@@ -14,22 +14,50 @@ const userAuthRoutes = require('./routes/userAuth');
 const app = express();
 
 // app.use(cors());
-const allowedOrigins = [
- 'http://localhost:3000',
-  'http://127.0.0.1:3000',
-  'http://localhost:8080',      // Also allow localhost via IP
-  // 'https://local-sevaaaaa.netlify.app'  // Your Netlify frontend
-   process.env.FRONTEND_URL 
-];
+// const allowedOrigins = [
+//  'http://localhost:3000',
+//   'http://127.0.0.1:3000',
+//   'http://localhost:8080',      // Also allow localhost via IP
+//   // 'https://local-sevaaaaa.netlify.app'  // Your Netlify frontend
+//    //check
+//    process.env.FRONTEND_URL 
+// ];
+
+
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     // allow requests with no origin (like mobile apps or curl)
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('CORS not allowed for this origin: ' + origin));
+//     }
+//   },
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   credentials: true
+// }));
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl)
-    if (!origin || allowedOrigins.includes(origin)) {
+    // ✅ Handles mobile apps and direct API calls
+    if (!origin) {
       callback(null, true);
-    } else {
-      callback(new Error('CORS not allowed for this origin: ' + origin));
+      return;
     }
+
+    // ✅ Keeps your local development working
+    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      callback(null, true);
+      return;
+    }
+
+    // ✅ Works with ANY Netlify URL (current and future)
+    if (origin.endsWith('.netlify.app')) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error('CORS not allowed for this origin: ' + origin));
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
