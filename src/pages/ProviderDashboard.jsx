@@ -452,6 +452,10 @@ const ProviderDashboard = () => {
 
   const navigate = useNavigate();
 
+  // Environment variable setup
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+  const cleanBaseUrl = baseUrl.replace(/\/$/, '');
+
   const handleLogout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('userName');
@@ -513,7 +517,8 @@ const ProviderDashboard = () => {
       
       // Fetch requests for each provider name
       for (const providerId of providerIds) {
-        const res = await axios.get(`http://localhost:5000/api/requests/provider/${providerId}`);
+        // const res = await axios.get(`http://localhost:5000/api/requests/provider/${providerId}`);
+         const res = await axios.get(`${cleanBaseUrl}/requests/provider/${providerId}`);
         allRequests.push(...res.data); // add all to one array
       }
       
@@ -525,7 +530,8 @@ const ProviderDashboard = () => {
   
   const handleUpdate = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/requests/${id}`, { status });
+      // await axios.put(`http://localhost:5000/api/requests/${id}`, { status });
+      await axios.put(`${cleanBaseUrl}/requests/${id}`, { status });
       fetchAllProviderRequests(); // refresh
     } catch (err) {
       console.error("Failed to update status", err);
@@ -534,7 +540,8 @@ const ProviderDashboard = () => {
 
   const handleViewDetails = async (requestId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/requests/details/${requestId}`);
+      // const res = await axios.get(`http://localhost:5000/api/requests/details/${requestId}`);
+      const res = await axios.get(`${cleanBaseUrl}/requests/details/${requestId}`);
       setSelectedRequest(res.data);
       setShowDetails(true);
     } catch (err) {
